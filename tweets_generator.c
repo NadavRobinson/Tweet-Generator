@@ -13,7 +13,7 @@ int fill_database(FILE* fp, int words_to_read, MarkovChain *markov_chain);
 int main(int argc, char* argv[]){
     if(argc > 5){
         printf(NUM_ARGS_ERROR);
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
     int seed = atoi(argv[1]);
     int numOfTweets = atoi(argv[2]);
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]){
     FILE* fp = fopen(filename, "r");
     if(!fp){
         printf(FILE_PATH_ERROR);
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
 
     int words_to_read = argc == 5 ? atoi(argv[4]) : -1;
@@ -30,14 +30,14 @@ int main(int argc, char* argv[]){
     MarkovChain *markov_chain = malloc(sizeof(MarkovChain));
     if(!markov_chain) {
         fclose(fp);
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
 
     markov_chain->database = malloc(sizeof(LinkedList));
     if(!markov_chain->database) {
         free_database(&markov_chain);
         fclose(fp);
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
 
     *markov_chain->database = (LinkedList) {NULL, NULL, 0};
@@ -45,7 +45,7 @@ int main(int argc, char* argv[]){
     if (fill_database(fp, words_to_read, markov_chain) == 1){
         free_database(&markov_chain);
         fclose(fp);
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
 
     // Start generating tweets

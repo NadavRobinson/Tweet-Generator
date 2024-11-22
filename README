@@ -1,0 +1,47 @@
+--Tweet Generator Using Markov Chains--
+Authored by Nadav Robinson 212544779
+
+Generate unique tweets by analyzing an existing dataset using Markov Chains, a powerful technique in Natural Language Processing (NLP).
+This project demonstrates how to use probabilistic models to produce synthetic text while preserving the tone and structure of the original data.
+
+--Features--
+
+-Create new sentences that mimic the style of the input dataset.
+-Simple and intuitive implementation of Markov Chains.
+-Easily customizable to work with any text dataset.
+-Learn the foundations of probabilistic modeling in NLP.
+
+--Data Structures and Files--
+
+-Files in the Project-
+
+chain_markov.h:
+Header file containing the skeleton of core functions for building and traversing the Markov Chain.
+
+chain_markov.c:
+Implementation of the functions defined in chain_markov.h.
+
+list_linked.c and list_linked.h:
+Implementation of a linked list for managing states and transitions in the Markov Chain.
+
+generator_tweets.c:
+Contains the main function and additional helper function for loading data, and filling database.
+
+-Data Structures-
+
+MarkovChain:
+Represents the Markov Chain as a database of states and their transitions using linked list.
+
+MarkovNode:
+Represents a state in the Markov Chain with its associated data and a frequency list for possible transitions.
+
+MarkovNodeFrequency:
+Represents a transition between two states in the Markov Chain, including the frequency of the transition.
+
+
+--How To Compile--
+run 'gcc tweets_generator.c markov_chain.c linked_list.c -o tweets_generator'
+
+--How To Run--
+run './tweets_generator <seed> <number of tweets to generate> <path to input file> <amount of words to read>'
+Example: ./tweets_generator 454545 10 input_file.txt 150
