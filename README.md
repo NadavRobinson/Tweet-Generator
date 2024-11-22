@@ -10,7 +10,7 @@ Generate unique tweets by analyzing an existing dataset using **Markov Chains**,
   - [Installation](#installation)
 - [Usage](#usage)
   - [Compilation](#compilation)
-  - [Running](#running)
+  - [Running](#running-the-program)
 - [How It Works](#how-it-works)
 
 ## Introduction
