@@ -48,6 +48,16 @@ int main(int argc, char* argv[]){
         exit(EXIT_FAILURE);
     }
 
+    // Start generating tweets
+    srand(seed);
+
+    for (int i = 1; i <= numOfTweets; i++){
+        MarkovNode *first_node = get_first_random_node(markov_chain);
+        printf("Tweet %d: ", i);
+        generate_tweet(first_node, 20);
+        printf("\n");
+    }
+
     free_database(&markov_chain);
     fclose(fp);
     return 0;

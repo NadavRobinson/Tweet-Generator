@@ -30,7 +30,15 @@ Node* add_to_database(MarkovChain *markov_chain, char *data_ptr){
     if (!new_markov_node) {
         return NULL;
     }
-    *(new_markov_node) = (MarkovNode){data_ptr, NULL, 0};
+
+    char *word = malloc(strlen(data_ptr) + 1);
+    if (word == NULL) {
+        return NULL;
+    }
+    strcpy(word, data_ptr);
+
+    // Initialize the MarkovNode
+    *new_markov_node = (MarkovNode){word, NULL, 0};
 
     if(add(markov_chain->database, new_markov_node) == 1)
         return NULL;
@@ -78,6 +86,9 @@ void free_database(MarkovChain ** ptr_chain){
         free(node->data->frequency_list);   // Free the frequency list in the node
         node->data->frequency_list = NULL;
 
+        free(node->data->data);
+        node->data->data = NULL;
+
         free(node->data);   // Free the data (Markov Node) in the node
         node->data = NULL;
 
@@ -90,4 +101,53 @@ void free_database(MarkovChain ** ptr_chain){
 
     free(*ptr_chain);
     *ptr_chain = NULL;
+}
+
+MarkovNode* get_first_random_node(MarkovChain *markov_chain){
+    Node *node = markov_chain->database->first;
+    while (1){
+        int rand_number = get_random_number(markov_chain->database->size);
+        for(int i = 0; i < rand_number; i++){
+            node = node->next;
+        }
+        char *word = node->data->data;
+        if (word[strlen(word) - 1] != '.')
+            return node->data;
+    }
+}
+
+MarkovNode* get_next_random_node(MarkovNode *cur_markov_node){
+    int total_frequency = 0;
+    for (int i = 0; i < cur_markov_node->size; i++){
+        total_frequency += cur_markov_node->frequency_list[i].frequency;
+    }
+
+    int rand_number = get_random_number(total_frequency) + 1;
+
+    int count = 0;
+    for (int i = 0; i < cur_markov_node->size; i++){
+        count += cur_markov_node->frequency_list[i].frequency;
+        if(rand_number <= count)
+            return cur_markov_node->frequency_list[i].markov_node;
+    }
+
+    return NULL;
+}
+
+void generate_tweet(MarkovNode *first_node, int max_length){
+    MarkovNode *cur_node = first_node;
+    int word_count = 0;
+
+    while (word_count < max_length){
+        if (word_count > 0)
+            printf(" ");
+
+        printf("%s", cur_node->data);
+
+        if (cur_node->data[strlen(cur_node->data) - 1] == '.')
+            break;
+
+        cur_node = get_next_random_node(cur_node);
+        word_count++;
+    }
 }
