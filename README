@@ -38,7 +38,6 @@ Represents a state in the Markov Chain with its associated data and a frequency 
 MarkovNodeFrequency:
 Represents a transition between two states in the Markov Chain, including the frequency of the transition.
 
-
 --How To Compile--
 run 'gcc tweets_generator.c markov_chain.c linked_list.c -o tweets_generator'
 
