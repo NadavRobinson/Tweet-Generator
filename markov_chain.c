@@ -104,8 +104,9 @@ void free_database(MarkovChain ** ptr_chain){
 }
 
 MarkovNode* get_first_random_node(MarkovChain *markov_chain){
-    Node *node = markov_chain->database->first;
+    Node *node;
     while (1){
+        node = markov_chain->database->first;
         int rand_number = get_random_number(markov_chain->database->size);
         for(int i = 0; i < rand_number; i++){
             node = node->next;

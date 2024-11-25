@@ -11,8 +11,8 @@
 int fill_database(FILE* fp, int words_to_read, MarkovChain *markov_chain);
 
 int main(int argc, char* argv[]){
-    if(argc > 5){
-        printf(NUM_ARGS_ERROR);
+    if(argc > 5 || argc < 4){
+        printf("%s\n", NUM_ARGS_ERROR);
         return EXIT_FAILURE;
     }
     int seed = atoi(argv[1]);
@@ -21,7 +21,7 @@ int main(int argc, char* argv[]){
 
     FILE* fp = fopen(filename, "r");
     if(!fp){
-        printf(FILE_PATH_ERROR);
+        printf("%s\n", FILE_PATH_ERROR);
         return EXIT_FAILURE;
     }
 
