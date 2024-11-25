@@ -137,18 +137,20 @@ MarkovNode* get_next_random_node(MarkovNode *cur_markov_node){
 
 void generate_tweet(MarkovNode *first_node, int max_length){
     MarkovNode *cur_node = first_node;
-    int word_count = 0;
+
+    printf("%s", cur_node->data);
+
+    int word_count = 1;
 
     while (word_count < max_length){
-        if (word_count > 0)
-            printf(" ");
-
-        printf("%s", cur_node->data);
-
         if (cur_node->data[strlen(cur_node->data) - 1] == '.')
-            break;
+            return;
 
         cur_node = get_next_random_node(cur_node);
+
+        printf(" %s", cur_node->data);
+
         word_count++;
+
     }
 }
